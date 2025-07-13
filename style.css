@@ -1,0 +1,578 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: #0a0a0a;
+    overflow: hidden;
+    color: #ffffff;
+    user-select: none;
+}
+
+#container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+#canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Theme Variables */
+:root {
+    --panel-bg: rgba(15, 15, 25, 0.85);
+    --panel-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --accent-color: #64ffda;
+    --button-bg: rgba(100, 255, 218, 0.1);
+    --button-hover: rgba(100, 255, 218, 0.2);
+    --backdrop-blur: blur(15px);
+}
+
+[data-theme="light"] {
+    --panel-bg: rgba(255, 255, 255, 0.9);
+    --panel-border: rgba(0, 0, 0, 0.1);
+    --text-primary: #2c2c2c;
+    --text-secondary: #666666;
+    --accent-color: #0077be;
+    --button-bg: rgba(0, 119, 190, 0.1);
+    --button-hover: rgba(0, 119, 190, 0.2);
+}
+
+/* Loading Screen */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0c0c1e 0%, #1a0033 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(100, 255, 218, 0.3);
+    border-top: 3px solid #64ffda;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Panel Styles */
+.panel {
+    position: absolute;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 15px;
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.panel-header h3 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.panel-content {
+    padding: 20px;
+}
+
+.toggle-btn {
+    background: var(--button-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-btn:hover {
+    background: var(--button-hover);
+    transform: scale(1.1);
+}
+
+/* Main Controls Panel */
+#controls-panel {
+    top: 20px;
+    left: 20px;
+    width: 320px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#controls-panel.collapsed .panel-content {
+    display: none;
+}
+
+/* Control Sections */
+.control-section {
+    margin-bottom: 25px;
+}
+
+.control-section h4 {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.control-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    background: var(--button-bg);
+    border: 1px solid var(--accent-color);
+    color: var(--text-primary);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 90px;
+}
+
+.control-btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+}
+
+.control-btn.active {
+    background: var(--accent-color);
+    color: #000;
+}
+
+/* Speed Controls */
+.speed-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.planet-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.speed-control label {
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.speed-slider {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+}
+
+.speed-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+}
+
+.speed-value {
+    color: var(--accent-color);
+    font-size: 0.7rem;
+    font-weight: 700;
+    min-width: 30px;
+    text-align: right;
+}
+
+/* Planet Info Panel */
+.info-panel {
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    max-width: 90vw;
+    transform: translateX(calc(100% + 20px));
+    transition: transform 0.4s ease;
+}
+
+.info-panel.active {
+    transform: translateX(0);
+}
+
+#planet-details {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+#planet-details h5 {
+    color: var(--accent-color);
+    margin: 15px 0 5px 0;
+    font-size: 0.9rem;
+}
+
+#planet-details p {
+    margin: 5px 0;
+    font-size: 0.8rem;
+}
+
+#planet-details .planet-description {
+    font-style: italic;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.planet-fact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.planet-fact:last-child {
+    border-bottom: none;
+}
+
+.fact-label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.fact-value {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* Instructions Panel */
+.instructions-panel {
+    bottom: 20px;
+    left: 20px;
+    width: 250px;
+}
+
+.instructions-panel h4 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.instructions-panel ul {
+    list-style: none;
+    color: var(--text-secondary);
+}
+
+.instructions-panel li {
+    margin: 8px 0;
+    font-size: 0.75rem;
+    padding-left: 15px;
+    position: relative;
+}
+
+.instructions-panel li::before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-size: 0.6rem;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip.visible {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #controls-panel {
+        width: calc(100vw - 40px);
+        max-width: 300px;
+        font-size: 14px;
+    }
+    
+    .info-panel {
+        width: calc(100vw - 40px);
+        max-width: 280px;
+    }
+    
+    .instructions-panel {
+        width: calc(100vw - 40px);
+        max-width: 220px;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    .control-group {
+        flex-direction: column;
+    }
+    
+    .control-btn {
+        min-width: unset;
+        font-size: 0.75rem;
+        padding: 10px 12px;
+    }
+    
+    .speed-control {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .speed-control label {
+        min-width: unset;
+        text-align: center;
+        font-size: 0.75rem;
+    }
+    
+    .panel-header h3 {
+        font-size: 1rem;
+    }
+    
+    .control-section h4 {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 600px) {
+    #controls-panel {
+        font-size: 12px;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-height: 70vh;
+    }
+    
+    .info-panel {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        transform: translateY(calc(-100% - 10px));
+    }
+    
+    .info-panel.active {
+        transform: translateY(0);
+    }
+    
+    .instructions-panel {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+    
+    .panel {
+        border-radius: 10px;
+    }
+    
+    .panel-header, .panel-content {
+        padding: 12px 15px;
+    }
+    
+    .control-btn {
+        font-size: 0.7rem;
+        padding: 8px 10px;
+    }
+    
+    .speed-control {
+        padding: 8px;
+    }
+    
+    .planet-indicator {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    
+    #controls-panel {
+        font-size: 11px;
+        max-height: 60vh;
+    }
+    
+    .panel-header h3 {
+        font-size: 0.9rem;
+    }
+    
+    .control-section h4 {
+        font-size: 0.75rem;
+    }
+    
+    .control-btn {
+        font-size: 0.65rem;
+        padding: 6px 8px;
+    }
+    
+    .speed-control label {
+        font-size: 0.7rem;
+    }
+    
+    .speed-value {
+        font-size: 0.65rem;
+    }
+    
+    .instructions-panel li {
+        font-size: 0.7rem;
+    }
+    
+    #planet-details p {
+        font-size: 0.75rem;
+    }
+    
+    #planet-details h5 {
+        font-size: 0.8rem;
+    }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 255, 218, 0.8);
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.scale-in {
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}

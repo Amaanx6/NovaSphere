@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Solar System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas"></canvas>
+        
+        <!-- Loading Screen -->
+        <div id="loading-screen">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h2>Initializing Solar System...</h2>
+                <p>Loading celestial bodies</p>
+            </div>
+        </div>
+
+        <!-- Main Controls Panel -->
+        <div id="controls-panel" class="panel">
+            <div class="panel-header">
+                <h3>Solar System Controls</h3>
+                <button id="toggle-panel" class="toggle-btn">−</button>
+            </div>
+            
+            <div class="panel-content">
+                <!-- Global Controls -->
+                <div class="control-section">
+                    <h4>Global Controls</h4>
+                    <div class="control-group">
+                        <button id="pause-btn" class="control-btn">⏸ Pause</button>
+                        <button id="reset-btn" class="control-btn">🔄 Reset View</button>
+                        <button id="theme-toggle" class="control-btn">🌙 Dark Mode</button>
+                    </div>
+                </div>
+
+                <!-- Speed Controls -->
+                <div class="control-section">
+                    <h4>Orbital Speeds</h4>
+                    <div id="speed-controls" class="speed-controls">
+                        <!-- Speed sliders will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planet Info Panel -->
+        <div id="planet-info" class="panel info-panel">
+            <div class="panel-header">
+                <h3 id="planet-name">Planet Information</h3>
+                <button id="close-info" class="toggle-btn">×</button>
+            </div>
+            <div class="panel-content">
+                <div id="planet-details">
+                    <p>Click on a planet to view details</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div id="instructions" class="panel instructions-panel">
+            <div class="panel-content">
+                <h4>🚀 Controls</h4>
+                <ul>
+                    <li><strong>Mouse:</strong> Rotate view</li>
+                    <li><strong>Scroll:</strong> Zoom in/out</li>
+                    <li><strong>Click Planet:</strong> Focus view</li>
+                    <li><strong>Hover Planet:</strong> Show info</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tooltip for planet hover -->
+        <div id="tooltip" class="tooltip"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
