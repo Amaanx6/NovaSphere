@@ -148,6 +148,19 @@ body {
     display: none;
 }
 
+/* Hide controls completely on mobile by default */
+#controls-panel.mobile-hidden {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#controls-panel.mobile-hidden.visible {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* Control Sections */
 .control-section {
     margin-bottom: 25px;
@@ -234,7 +247,6 @@ body {
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
-    appearance: none;
 }
 
 .speed-slider::-webkit-slider-thumb {
@@ -262,8 +274,9 @@ body {
     color: var(--accent-color);
     font-size: 0.7rem;
     font-weight: 700;
-    min-width: 30px;
+    min-width: 40px;
     text-align: right;
+    flex-shrink: 0;
 }
 
 /* Planet Info Panel */
@@ -385,6 +398,25 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    #controls-panel {
+        width: calc(100vw - 40px);
+        max-width: 300px;
+        font-size: 14px;
+    }
+    
+    #controls-panel.collapsed .panel-content {
+        display: none;
+    }
+    
+    /* Start collapsed on mobile */
+    #controls-panel.mobile-collapsed .panel-content {
+        display: none;
+    }
+    
+    #controls-panel.mobile-collapsed #toggle-panel {
+        transform: rotate(45deg);
+    }
+    
     #controls-panel {
         width: calc(100vw - 40px);
         max-width: 300px;
@@ -515,6 +547,7 @@ body {
     
     .speed-value {
         font-size: 0.65rem;
+        min-width: 35px;
     }
     
     .instructions-panel li {
