@@ -1,4 +1,4 @@
-# Interactive 3D Solar System Simulation
+# NovoSphere - Interactive 3D Solar System Simulation
 
 A visually stunning, interactive 3D solar system simulation built with Three.js and vanilla JavaScript. Experience our solar system with realistic orbital mechanics, beautiful UI, and immersive interactions.
 
