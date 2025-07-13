@@ -182,8 +182,8 @@ class SolarSystem {
                 textureUrl: 'https://images.pexels.com/photos/39561/solar-system-mercury-planet-39561.jpeg',
                 emissive: 0x2a1f15,
                 orbitRadius: 8,
-                speed: 0.005,
-                rotationSpeed: 0.0001, // Reduced from 0.003 for slower rotation
+                speed: 0.003,
+                rotationSpeed: 0.0003,
                 description: 'The smallest planet and closest to the Sun. Mercury has extreme temperature variations and a heavily cratered surface similar to our Moon.',
                 facts: {
                     'Radius': '2,439 km',
@@ -297,7 +297,7 @@ class SolarSystem {
                 radius: 4.8,
                 color: 0xFAB27B,
                 textureUrl: 'https://images.pexels.com/photos/39561/solar-system-saturn-planet-39561.jpeg',
-                emissive: 0x332218,
+                orbitRadius: 50,
                 orbitRadius: 36, // Increased to prevent ring collision
                 speed: 0.0004,
                 rotationSpeed: 0.018,
@@ -345,7 +345,7 @@ class SolarSystem {
                 radius: 3.1,
                 color: 0x4B70DD,
                 textureUrl: 'https://images.pexels.com/photos/39561/solar-system-neptune-planet-39561.jpeg',
-                emissive: 0x0f1a33,
+                orbitRadius: 58,
                 orbitRadius: 50,
                 speed: 0.00008,
                 rotationSpeed: 0.016,
@@ -820,7 +820,6 @@ class SolarSystem {
     }
     
     addSaturnRings(planet, planetRadius) {
-        // Main ring system - reduced size to prevent collision
         const ringGeometry = new THREE.RingGeometry(planetRadius * 1.1, planetRadius * 1.6, 32);
         const ringMaterial = new THREE.MeshBasicMaterial({
             color: 0xcccccc,
@@ -842,8 +841,8 @@ class SolarSystem {
         
         ringData.forEach(ring => {
             const bandGeometry = new THREE.RingGeometry(
-                planetRadius * ring.inner,
-                planetRadius * ring.outer,
+                planetRadius * ring.inner, 
+                planetRadius * ring.outer, 
                 32
             );
             const bandMaterial = new THREE.MeshBasicMaterial({
@@ -876,6 +875,17 @@ class SolarSystem {
         canvas.addEventListener('touchstart', (event) => this.onTouchStart(event));
         canvas.addEventListener('touchmove', (event) => this.onTouchMove(event));
         canvas.addEventListener('touchend', () => this.onTouchEnd());
+        
+        // Add touch click handler for mobile planet selection
+        canvas.addEventListener('touchend', (event) => {
+            if (event.changedTouches.length === 1 && !this.controls.isMouseDown) {
+                const touch = event.changedTouches[0];
+                const rect = this.renderer.domElement.getBoundingClientRect();
+                this.mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+                this.checkPlanetClick();
+            }
+        });
         
         // Prevent context menu on right click
         canvas.addEventListener('contextmenu', (event) => event.preventDefault());
@@ -1136,6 +1146,16 @@ class SolarSystem {
     
     onTouchEnd() {
         this.controls.isMouseDown = false;
+    }
+    
+    onTouchClick(event) {
+        if (event.touches.length === 1) {
+            const touch = event.touches[0];
+            const rect = this.renderer.domElement.getBoundingClientRect();
+            this.mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+            this.mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+            this.checkPlanetClick();
+        }
     }
     
     updateMousePosition(event) {
