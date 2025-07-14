@@ -150,34 +150,6 @@ The simulation includes specific mobile optimizations:
 - **Performance**: Reduced star count and effects on mobile
 - **Battery Efficient**: Optimized rendering for mobile GPUs
 
-## 🔧 Troubleshooting
-
-### Performance Issues
-- **Reduce Star Count**: Lower the `starCount` in `createStarField()`
-- **Simplify Geometry**: Reduce planet geometry segments
-- **Disable Effects**: Comment out glow and shadow effects
-
-### Browser Compatibility
-- **Enable WebGL**: Ensure browser supports hardware acceleration
-- **Update Browser**: Use latest versions for best performance
-- **Check GPU**: Verify graphics drivers are up to date
-
-### Mobile Issues
-- **Touch Sensitivity**: Adjust `rotationSpeed` for better touch response
-- **UI Scaling**: Modify CSS media queries for specific devices
-- **Performance**: Reduce visual effects on older mobile devices
-
-## 🌌 Educational Value
-
-This simulation serves as an excellent educational tool for:
-- **Astronomy Education**: Visual representation of planetary motion
-- **Physics Concepts**: Orbital mechanics and relative scales
-- **Web Development**: Modern JavaScript and 3D graphics techniques
-- **Interactive Design**: User experience and responsive interfaces
-
-## 📄 License
-
-This project is open source and available under the MIT License.
 
 ## 🌟 Credits
 
