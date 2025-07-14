@@ -265,6 +265,7 @@ body {
     outline: none;
     cursor: pointer;
     -webkit-appearance: none;
+    appearance: none;
     margin: 0 8px;
 }
 
